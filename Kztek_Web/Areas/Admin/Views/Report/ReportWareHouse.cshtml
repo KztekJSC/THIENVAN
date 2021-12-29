@@ -1,0 +1,139 @@
+﻿@using Kztek_Model.Models
+@using Kztek_Library.Helpers
+@model List<tbl_Event_Submit>
+
+@{
+    ViewBag.Title = "ReportEventIn";
+
+    var authModel = (Kztek_Library.Models.AuthActionModel)ViewBag.AuthValue;
+
+    var plate = await LanguageHelper.GetLanguageText("BODY:TABLE:PLATE");
+}
+
+<p style="font-weight:bold;font-size:32px">Xe đang gọi: <span id="spPlateWH"></span></p>
+
+<div class="page-header">
+
+    <h1 style="margin-left: unset;">
+        Danh sách xe chờ vào kho (<span id="spCountWH">@Model.Count</span> xe)
+    </h1>
+</div>
+
+<div class="row">
+    @using (Html.BeginForm("ReportWareHouse", "Report", FormMethod.Get, new { id = "frmReport" }))
+    {
+        <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12 divboxmd">
+            Từ khóa
+            <input type="text" name="key" value="@ViewBag.keyValue" placeholder="Biển số, khách hàng, loại hàng" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12 divboxmd">
+                Ngày :
+                <div class="input-group">
+                    @Html.TextBox("fromdate", (string)ViewBag.fromdateValue, new { @class = "form-control drp_ranger_input" })
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 divboxmd">
+            <br />
+            <button class="btn btn-white btn-primary btnSearch" type="submit"><i class="fa fa-search" aria-hidden="true"></i> @await Component.InvokeAsync("Language", new { path = "BODY:BUTTON:SEARCH" }) </button>
+            <a href='@Url.Action("ReportWareHouse", "Report")' class="btn btn-primary btn-white" type="submit">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+                Reset
+            </a>
+
+        </div>
+
+
+    }
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-xs-8">
+        <div class="divScroll" style="height:800px;overflow:auto;">
+            <table class="table  table-bordered table-hover">
+                <thead>
+                    <tr class="headerSort">
+                        <th class="center" width="20">@await Component.InvokeAsync("Language", new { path = "BODY:TABLE:SortOrder" })</th>
+                        <th class="text-center">Giờ vào  </th>
+                        <th class="text-center">@plate </th>
+
+                        <th class="text-center">Khách hàng</th>
+
+                        <th class="center">Loại hàng</th>
+
+                        <th class="text-center hidden-480" width="50"> </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr id="WH_@item.id">
+                                <td class="text-center">@item.event_Number</td>
+                                <td class="center">
+                                    @item.event_DateTime_Service
+                                </td>
+                                <td>
+                                    @item.plate_Number1
+                                </td>
+                                <td>
+                                    @item.customer_Name
+                                </td>
+                                <td class="center">
+                                    @item.commodity_Name
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-default btnCallWH" idata="@item.id"> Gọi xe</button>
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    @*@if (Model.Data.Any())
+        {
+            <div class="col-xs-8">
+                <div class="pull-right">
+                    @Html.GeneratePagingFooter(Model.TotalPage, Model.PageIndex, Model.PageSize, "pagination", x => Url.Action("ReportEventIn", "Report", new
+               {
+                   page = x,
+                   key = ViewBag.KeyWord,
+                   datefrompicker = ViewBag.DateFromPickerValue,
+                   gate = ViewBag.GateId,
+                   group = ViewBag.GroupId,
+                   fromdate = ViewBag.fromdateValue,
+                   vehicletype = ViewBag.TypeValue,
+                   todate = ViewBag.todateValue
+               }))
+                </div>
+            </div>
+        }*@
+</div>
+
+@section scripts{
+    <script src="~/modules/Signalr.js"></script>
+    <script src="~/modules/ReportController.js"></script>
+    <script>
+
+
+        $(document).ready(function () {
+
+
+        });
+    </script>
+}

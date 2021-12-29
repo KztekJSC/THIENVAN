@@ -1,0 +1,17 @@
+﻿@model Kztek_Model.Models.tbl_Controller
+
+@await Html.PartialAsync("Partial_Action", new Kztek_Library.Models.PartialActionModel<Kztek_Model.Models.tbl_Controller>()
+{
+    Model = Model,
+    Controller = "tblController",
+    Action = "Create",
+    Page = 1
+   
+
+});
+@section scripts{
+    <script src="~/modules/Parking/tblLaneController.js"></script>
+    <script>
+       
+    </script>
+}
