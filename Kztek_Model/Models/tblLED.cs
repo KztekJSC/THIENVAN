@@ -12,46 +12,39 @@ namespace Kztek_Model.Models
     public  class tblLED
     {
         [Key]
-        public string id { get; set; }
+        public string ID { get; set; }
+        public int Sort { get; set; }
+        public string Name { get; set; }
 
-        public string led_Name { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
+        public int Type { get; set; }
+        public int CommunicationType { get; set; }
+        public string IP { get; set; }
 
-        public string led_Code { get; set; }
-
-        public int led_Function { get; set; }
-
-        public string controller_Type { get; set; }
-
-        public string ip_Address { get; set; }
-
-        public int port { get; set; }
-
-        public string description { get; set; }
+        public int Port { get; set; }
+        public int Address { get; set; }
+        public int Arrow { get; set; }
+        public int Color { get; set; }
+        public int ZeroColor { get; set; }
     }
     public class tblLED_Submit
     {
+        public string ID { get; set; }
+        public int Sort { get; set; }
+        public string Name { get; set; }
 
-        public string id { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
+        public int Type { get; set; }
+        public int CommunicationType { get; set; }
+        public string IP { get; set; }
 
-        public string led_Name { get; set; }
-
-        public string led_Code { get; set; }
-
-        public string FunctionLed { get; set; }
-
-        public string led_Function1 { get; set; }
-
-        public int led_Function { get; set; }
-
-        public string controller_Type { get; set; }
-
-        public string ip_Address { get; set; }
-
-        public int port { get; set; }
-
-        public string description { get; set; }
-
-
+        public int Port { get; set; }
+        public int Address { get; set; }
+        public int Arrow { get; set; }
+        public int Color { get; set; }
+        public int ZeroColor { get; set; }
 
     }
 }

@@ -46,10 +46,12 @@
     <Folder Include="Views\tblSystemConfig\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
     <Content Remove="Views\Shared\_LoginLayout %28copy%29.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Areas\Admin\Views\Login\Index.cshtml" />
+    <None Include="compilerconfig.json" />
     <None Include="wwwroot\language\js-language.js" />
   </ItemGroup>
   <ItemGroup>

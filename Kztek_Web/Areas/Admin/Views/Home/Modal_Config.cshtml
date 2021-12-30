@@ -1,0 +1,58 @@
+﻿@model Kztek_Library.Models.PC_Tree
+    <style>
+        #ModalConfig .modal-dialog {
+            width: 20%;
+            max-width: unset !important;
+        }
+    </style>
+    <div id="ModalConfig" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-md">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        Cấu hình BĐK
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form id="@string.Format("frmConfig")" class="form-horizontal">
+                        @Html.Hidden("hidConId", Model.Data1)
+                        @Html.Hidden("hidLaneId", Model.Data2)
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label"> Đầu đọc</label>
+                                    <div class="col-sm-3 col-xs-12">
+                                        @await Component.InvokeAsync("MultiSelect", Model.Multi1)
+                                        @Html.Hidden("hidReader", Model.Multi1.Selecteds)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label"> Nút bấm & loop</label>
+                                    <div class="col-sm-3 col-xs-12">
+                                        @await Component.InvokeAsync("MultiSelect", Model.Multi2)
+                                        @Html.Hidden("hidInput", Model.Multi2.Selecteds)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label"> Barrier</label>
+                                    <div class="col-sm-3 col-xs-12">
+                                        @await Component.InvokeAsync("MultiSelect", Model.Multi3)
+                                        @Html.Hidden("hidBarrier", Model.Multi3.Selecteds)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm px-4 btn-outline-primary mb-1" id="btnClose" data-dismiss="modal">Thoát</button>
+                    <button type="button" class="btn btn-sm px-4 btn-primary mb-1" id="btnCompleted">Hoàn thành</button>
+                </div>
+            </div>
+
+        </div>
+    </div>

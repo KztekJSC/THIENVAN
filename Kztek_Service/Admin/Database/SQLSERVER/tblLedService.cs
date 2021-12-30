@@ -49,12 +49,12 @@ namespace Kztek_Service.Admin.Database.SQLSERVER
 
             if (!string.IsNullOrWhiteSpace(key))
             {
-                query = query.Where(n => n.led_Name.Contains(key));
+                query = query.Where(n => n.Name.Contains(key));
             }
 
             var pageList = query.ToPagedList(page, pageSize);
 
-            var model = GridModelHelper<tblLED>.GetPage(pageList.OrderByDescending(n => n.led_Name).ToList(), page, pageSize, pageList.TotalItemCount, pageList.PageCount);
+            var model = GridModelHelper<tblLED>.GetPage(pageList.OrderByDescending(n => n.Name).ToList(), page, pageSize, pageList.TotalItemCount, pageList.PageCount);
 
             return await Task.FromResult(model);
         }
@@ -64,14 +64,14 @@ namespace Kztek_Service.Admin.Database.SQLSERVER
             var obj = await GetByID(id);
             var model = new tblLED_Submit()
             {
-                id = id.ToString(),
-                led_Code = obj.led_Code,
-                led_Name = obj.led_Name,
-                ip_Address = obj.ip_Address,
-                FunctionLed = obj.led_Function.ToString(),
-                description = obj.description,
-                port = obj.port,
-                controller_Type = obj.controller_Type,
+                ID = id,
+                Code = obj.Code,
+                Name = obj.Name,
+                IP = obj.IP,
+             
+                Description = obj.Description,
+                Port = obj.Port,
+                Type = obj.Type,
 
             };
             return model;
@@ -82,11 +82,17 @@ namespace Kztek_Service.Admin.Database.SQLSERVER
         {
             return await _tblLEDRepository.GetOneById(id);
         }
+        public async Task<List<tblLED>> GetAll()
+        {
+            var query = from n in _tblLEDRepository.Table
+                        select n;
 
+            return await Task.FromResult(query.ToList());
+        }
         public async Task<tblLED> GetByName(string led_Name)
         {
             var query = from n in _tblLEDRepository.Table
-                        where n.led_Name == led_Name
+                        where n.Name == led_Name
                         select n;
 
             return await Task.FromResult(query.FirstOrDefault());
@@ -95,7 +101,7 @@ namespace Kztek_Service.Admin.Database.SQLSERVER
         public async Task<tblLED> GetByName_Id(string led_Name, string id)
         {
             var query = from n in _tblLEDRepository.Table
-                        where n.led_Name == led_Name && n.id.ToString() != id
+                        where n.Name == led_Name && n.ID != id
                         select n;
 
             return await Task.FromResult(query.FirstOrDefault());

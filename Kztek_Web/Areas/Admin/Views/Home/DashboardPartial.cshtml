@@ -2,141 +2,107 @@
 
 @if (Model.objPC != null)
 {
-    <div class="container" style="text-align:center">
-        <h1 class="level-1 rectangle">@Model.objPC.pc_Name</h1>
-        @if (Model.LanePCs.Count > 0)
-        {
-            <ol class="level-2-wrapper">
-                @foreach (var itemL in Model.LanePCs)
-                {
-                <li>
-                    <h2 class="level-2 rectangle">@itemL.lane_Name</h2>
-                    @if (Model.Controllers.Count > 0)
-                    {
-                        <ol class="level-3-wrapper">
-                            <li>
-                                <h3 class="level-3 rectangle">Bộ điều khiển</h3>
-                                <ol class="level-4-wrapper">
-                                    @foreach (var itemC in Model.Controllers)
-                                    {
-                                        <li>
-                                            <h4 class="level-4 rectangle">@itemC.controller_Name</h4>
-                                        </li>
-                                        
-                                    }
-                                </ol>
-                            </li>
-                            @*<li>
-                    <h3 class="level-3 rectangle">Manager B</h3>
-                    <ol class="level-4-wrapper">
-                        <li>
-                            <h4 class="level-4 rectangle">Person A</h4>
-                        </li>
-                        <li>
-                            <h4 class="level-4 rectangle">Person B</h4>
-                        </li>
-                        <li>
-                            <h4 class="level-4 rectangle">Person C</h4>
-                        </li>
-                        <li>
-                            <h4 class="level-4 rectangle">Person D</h4>
-                        </li>
-                    </ol>
-                </li>*@
-                        </ol>
-                    }
+    @Html.Hidden("hidPCId", Model.objPC.id)
+   
+    <div class="tree">
+        <ul>
+            <li>
+                <span>
+                    @Model.objPC.pc_Name
+                    <a href="javascript:void(0)" class=" btnAddLane" title="Thêm mới làn">
 
-                </li>
+                        <i class="green ace-icon fa fa-plus bigger-120"></i>
+                    </a>
+                </span>
+                @if (Model.LanePCs.Count > 0)
+                {
+                   
+                    <ul>
+                        @foreach (var itemL in Model.LanePCs)
+                        {
+                            var laneControllers = Model.Controllers.Where(n => n.lane_ID == itemL.lane_ID);
+
+                            var laneLeds = Model.LaneLeds.Where(n => n.lane_ID == itemL.lane_ID);
+                        <li>
+                            <span href="javascript:void(0)">@itemL.lane_Name</span>
+                            <ul>
+                                <li>
+                                    <span >
+                                        Bộ điều khiển
+                                        <a href="javascript:void(0)" class="btnAddController" idata="@itemL.lane_ID" title="Thêm mới bộ điều khiển">
+                                            <i class="green ace-icon fa fa-plus bigger-120"></i>
+                                        </a>
+                                    </span>
+                                    @if (laneControllers != null && laneControllers.Count() > 0)
+                                    {
+
+                                        <ul id="ulCon_@itemL.lane_ID">
+                                            @foreach (var itemC in laneControllers)
+                                            {
+                                            <li id="liCon_@itemC.id">
+                                               
+                                                <span>
+                                                    <a href="javascript:void(0)" class="btnConfigController" idata="@itemC.controller_ID" idata1="@itemL.lane_ID" title="Cấu hình bộ điều khiển">
+                                                        <i class="info ace-icon fa fa-pencil bigger-120"></i>
+                                                    </a>
+                                                    @itemC.controller_Name
+
+                                                    <a href="javascript:void(0)" class=" btnDelController" idata="@itemC.id" title="Xóa bộ điều khiển">
+                                                        <i class="red ace-icon fa fa-remove bigger-120"></i>
+                                                    </a>
+                                                </span>
+                                            </li>
+                                            }
+
+                                        </ul>
+                                    }
+
+                                </li>
+                                <li>
+                                    <span>
+                                        Led
+                                        <a href="javascript:void(0)" class="btnAddLed" idata="@itemL.lane_ID" title="Thêm mới led">
+                                            <i class="green ace-icon fa fa-plus bigger-120"></i>
+                                        </a>
+                                    </span>
+                                    @if (laneLeds != null && laneLeds.Count() > 0)
+                                    {
+
+                                        <ul id="ulLed_@itemL.lane_ID">
+                                            @foreach (var itemLed in laneLeds)
+                                            {
+                                                <li id="liLed_@itemLed.id">
+
+                                                    <span>
+                                                       
+                                                        @itemLed.LED_Name
+
+                                                        <a href="javascript:void(0)" class=" btnDelLed" idata="@itemLed.id" idata1="@itemL.lane_ID" title="Xóa led">
+                                                            <i class="red ace-icon fa fa-remove bigger-120"></i>
+                                                        </a>
+                                                    </span>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    }
+                                </li>
+                            </ul>
+                           
+
+                        </li>
+
+
+                        }
+
+
+                    </ul>
                 }
 
-
-            </ol>
+            </li>
+        </ul>
+        </div>
         }
 
-    </div>
-}
 
-
-@*<div class="container" style="text-align:center">
-        <h1 class="level-1 rectangle">Thiết bị</h1>
-        <ol class="level-2-wrapper">
-            <li>
-                <h2 class="level-2 rectangle">Director A</h2>
-                <ol class="level-3-wrapper">
-                    <li>
-                        <h3 class="level-3 rectangle">Manager A</h3>
-                        <ol class="level-4-wrapper">
-                            <li>
-                                <h4 class="level-4 rectangle">Person A</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person B</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person C</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person D</h4>
-                            </li>
-                        </ol>
-                    </li>
-                    <li>
-                        <h3 class="level-3 rectangle">Manager B</h3>
-                        <ol class="level-4-wrapper">
-                            <li>
-                                <h4 class="level-4 rectangle">Person A</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person B</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person C</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person D</h4>
-                            </li>
-                        </ol>
-                    </li>
-                </ol>
-            </li>
-            <li>
-                <h2 class="level-2 rectangle">Director B</h2>
-                <ol class="level-3-wrapper">
-                    <li>
-                        <h3 class="level-3 rectangle">Manager C</h3>
-                        <ol class="level-4-wrapper">
-                            <li>
-                                <h4 class="level-4 rectangle">Person A</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person B</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person C</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person D</h4>
-                            </li>
-                        </ol>
-                    </li>
-                    <li>
-                        <h3 class="level-3 rectangle">Manager D</h3>
-                        <ol class="level-4-wrapper">
-                            <li>
-                                <h4 class="level-4 rectangle">Person A</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person B</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person C</h4>
-                            </li>
-                            <li>
-                                <h4 class="level-4 rectangle">Person D</h4>
-                            </li>
-                        </ol>
-                    </li>
-                </ol>
-            </li>
-        </ol>
-    </div>*@
+    

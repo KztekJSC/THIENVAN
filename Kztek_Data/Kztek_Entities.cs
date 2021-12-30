@@ -47,6 +47,7 @@ namespace Kztek_Data
         public DbSet<tbl_Event> tbl_Events { get; set; } 
 
         public DbSet<tbl_Lane_PC> tbl_Lane_PCs { get; set; }
+        public DbSet<tbl_Lane_Led> tbl_Lane_Leds { get; set; }
         public DbSet<tbl_Lane_Controller> tbl_Lane_Controllers { get; set; }
         public DbSet<tbl_Controller> tbl_Controllers { get; set; }
         //Face

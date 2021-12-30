@@ -40,9 +40,12 @@ namespace Kztek_Service.Admin.Database.SQLSERVER
             return await Task.FromResult(result);
         }
 
-        public Task<List<tbl_Controller>> GetAllActive()
+        public async Task<List<tbl_Controller>> GetAllActive()
         {
-            throw new NotImplementedException();
+            var query = from n in _tbl_ControllerRepository.Table
+                        select n;
+
+            return await Task.FromResult(query.ToList());
         }
 
         public Task<IEnumerable<tbl_Controller>> GetAllActiveByPC(string id)

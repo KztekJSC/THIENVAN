@@ -33,7 +33,7 @@
         {
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             @Html.Hidden("key", (string)ViewBag.keyValue)
-            @Html.Hidden("function_LED",Model.Model != null ? Model.Model.FunctionLed : "")
+         
             @Html.Hidden("AreaCode", (string)ViewBag.AreaCodeValue)
             @*@Html.Hidden("gates", Model.Model != null ? Model.Model.GateID : "")*@
 
@@ -43,7 +43,7 @@
             }
             else
             {
-                @Html.HiddenFor(n => n.Model.id)
+                @Html.HiddenFor(n => n.Model.ID)
                 @Html.Hidden("page", pn)
             }
 
@@ -51,15 +51,15 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right">Tên LED</label>
                 <div class="col-sm-4 col-xs-12">
-                    @Html.TextBoxFor(n => n.Model.led_Name, new { @class = "form-control", @placeholder = "Tên LED" })
-                    @Html.ValidationMessageFor(n => n.Model.led_Name, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(n => n.Model.Name, new { @class = "form-control", @placeholder = "Tên LED" })
+                    @Html.ValidationMessageFor(n => n.Model.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right"> Mã LED  </label>
                 <div class="col-sm-4 col-xs-12">
-                    @Html.TextBoxFor(n => n.Model.led_Code, new { @class = "form-control", @placeholder = "Mã LED" })
-                    @Html.ValidationMessageFor(n => n.Model.led_Code, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(n => n.Model.Code, new { @class = "form-control", @placeholder = "Mã LED" })
+                    @Html.ValidationMessageFor(n => n.Model.Code, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -73,30 +73,30 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right"> Loại điều khiển  </label>
                 <div class="col-sm-4 col-xs-12">
-                    @Html.TextBoxFor(n => n.Model.controller_Type, new { @class = "form-control", @placeholder = "Loại điều khiển" })
-                    @Html.ValidationMessageFor(n => n.Model.controller_Type, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(n => n.Model.Type, new { @class = "form-control", @placeholder = "Loại điều khiển" })
+                    @Html.ValidationMessageFor(n => n.Model.Type, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right"> Địa chỉ IP </label>
                 <div class="col-sm-4 col-xs-12">
-                    @Html.TextBoxFor(n => n.Model.ip_Address, new { @class = "form-control", @placeholder = " Địa chỉ Ip" })
-                    @Html.ValidationMessageFor(n => n.Model.ip_Address, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(n => n.Model.IP, new { @class = "form-control", @placeholder = " Địa chỉ Ip" })
+                    @Html.ValidationMessageFor(n => n.Model.IP, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right"> Port </label>
                 <div class="col-sm-4 col-xs-12">
-                    @Html.TextBoxFor(n => n.Model.port, new { @class = "form-control", @placeholder = "Port" })
-                    @Html.ValidationMessageFor(n => n.Model.port, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(n => n.Model.Port, new { @class = "form-control", @placeholder = "Port" })
+                    @Html.ValidationMessageFor(n => n.Model.Port, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right"> Miêu tả </label>
                 <div class="col-sm-4 col-xs-12">
-                    @Html.TextBoxFor(n => n.Model.description, new { @class = "form-control", @placeholder = " Miêu tả" })
-                    @Html.ValidationMessageFor(n => n.Model.description, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(n => n.Model.Description, new { @class = "form-control", @placeholder = " Miêu tả" })
+                    @Html.ValidationMessageFor(n => n.Model.Description, "", new { @class = "text-danger" })
                 </div>
             </div>
 

@@ -83,7 +83,7 @@ namespace Kztek_Web.Areas.Admin.Controllers
         public async Task<IActionResult> Create(tblLED_Submit model )
         {
             model = model == null ? new tblLED_Submit() : model;
-            ViewBag.LedFunction = await GetListLed_Function(model.FunctionLed);
+           
            
             return await Task.FromResult(View(model));
         }
@@ -103,37 +103,29 @@ namespace Kztek_Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(tblLED_Submit model, string function_LED, bool SaveAndCountinue = false)
         {
-            model.FunctionLed = function_LED;
-            ViewBag.LedFunction = await GetListLed_Function(model.FunctionLed);
-
+           
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            if (string.IsNullOrWhiteSpace(model.led_Name))
+            if (string.IsNullOrWhiteSpace(model.Name))
             {
-                ModelState.AddModelError("led_Name", "Nhập tên LED");
+                ModelState.AddModelError("Name", "Nhập tên LED");
                 return View(model);
             }
 
-            var existed = await _tblLedService.GetByName(model.led_Name);
+            var existed = await _tblLedService.GetByName(model.Name);
             if (existed != null)
             {
-                ModelState.AddModelError("led_Name", "LED đã tồn tại");
+                ModelState.AddModelError("Name", "LED đã tồn tại");
                 return View(model);
             }
             var obj = new tblLED();
-            obj.id = Guid.NewGuid().ToString();
-            obj.led_Code = model.led_Code;
-            obj.led_Name = model.led_Name;
-            obj.ip_Address = model.ip_Address;
-            obj.led_Function = Convert.ToInt32( function_LED);
-            obj.description = model.description;
-            obj.port = model.port;
-            obj.controller_Type = model.controller_Type;
-            
-          
+            obj.ID = Guid.NewGuid().ToString();
+            obj.Code = model.Code;
+            obj.Name = model.Name;
+         
             //Thực hiện thêm mới
             var result = await _tblLedService.Create(obj);
             if (result.isSuccess)
@@ -177,7 +169,7 @@ namespace Kztek_Web.Areas.Admin.Controllers
         public async Task<IActionResult> Update(string id, int pageNumber = 1)
         {
             var model = await _tblLedService.GetByCustomId(id);
-            ViewBag.LedFunction = await GetListLed_Function(model.FunctionLed);
+      
             return View(model);
         }
 
@@ -196,9 +188,8 @@ namespace Kztek_Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(tblLED_Submit model,string function_LED, int pageNumber = 1)
         {
-            model.FunctionLed = function_LED;
-            ViewBag.LedFunction = await GetListLed_Function(model.FunctionLed);
-            var oldObj = await _tblLedService.GetByID(model.id);
+           
+            var oldObj = await _tblLedService.GetByID(model.ID);
             if (oldObj == null)
             {
                 ViewBag.Error = await LanguageHelper.GetLanguageText("MESSAGE:RECORD:NOTEXISTS");
@@ -206,17 +197,17 @@ namespace Kztek_Web.Areas.Admin.Controllers
             }
 
             //
-            if (string.IsNullOrWhiteSpace(model.led_Name))
+            if (string.IsNullOrWhiteSpace(model.Name))
             {
-                ModelState.AddModelError("led_Name", "Tên đã tồn tại");
+                ModelState.AddModelError("Name", "Tên đã tồn tại");
                 return View(oldObj);
             }
 
             //
-            var existed = await _tblLedService.GetByName_Id(model.led_Name, model.id);
+            var existed = await _tblLedService.GetByName_Id(model.Name, model.ID);
             if (existed != null)
             {
-                ModelState.AddModelError("led_Name", "Tên đã tồn tại");
+                ModelState.AddModelError("Name", "Tên đã tồn tại");
                 return View(oldObj);
             }
 
@@ -227,14 +218,14 @@ namespace Kztek_Web.Areas.Admin.Controllers
 
             //Gán giá trị
 
-            oldObj.id = model.id;
-            oldObj.led_Code = model.led_Code;
-            oldObj.led_Name = model.led_Name;
-            oldObj.ip_Address = model.ip_Address;
-            oldObj.led_Function = Convert.ToInt32( function_LED);
-            oldObj.description = model.description;
-            oldObj.port = model.port;
-            oldObj.controller_Type = model.controller_Type;
+            //oldObj.id = model.id;
+            //oldObj.led_Code = model.led_Code;
+            //oldObj.led_Name = model.led_Name;
+            //oldObj.ip_Address = model.ip_Address;
+            //oldObj.led_Function = Convert.ToInt32( function_LED);
+            //oldObj.description = model.description;
+            //oldObj.port = model.port;
+            //oldObj.controller_Type = model.controller_Type;
 
 
             //Thực hiện cập nhật

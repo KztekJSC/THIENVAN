@@ -31,5 +31,12 @@ namespace Kztek_Library.Models
         public List<tbl_Lane_PC_Custom> LanePCs { get; set; }
 
         public List<tbl_Lane_Controller_Custom> Controllers { get; set; }
+
+        public List<tbl_Lane_Led_Custom> LaneLeds { get; set; }
+        public SelectListModel_Multi Multi1 { get; set; }
+        public SelectListModel_Multi Multi2 { get; set; }
+        public SelectListModel_Multi Multi3 { get; set; }
+        public string Data1 { get; set; }
+        public string Data2 { get; set; }
     }
 }

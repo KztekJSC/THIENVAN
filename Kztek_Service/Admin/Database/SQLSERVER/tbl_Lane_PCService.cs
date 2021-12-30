@@ -83,6 +83,14 @@ namespace Kztek_Service.Admin.Database.SQLSERVER
             return await Task.FromResult(query.FirstOrDefault()) ;
         }
 
+        public async Task<tbl_Lane_PC> GetByPCLane(string pcId,string laneId)
+        {
+            var query = from n in tbl_Lane_PCRepository.Table
+                        where n.pc_ID == pcId && n.lane_ID == laneId
+                        select n;
+            return await Task.FromResult(query.FirstOrDefault());
+        }
+
         public async Task<MessageReport> Update(tbl_Lane_PC obj)
         {
             return await tbl_Lane_PCRepository.Update(obj);

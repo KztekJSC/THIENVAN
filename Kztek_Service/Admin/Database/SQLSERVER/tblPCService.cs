@@ -148,7 +148,7 @@ namespace Kztek_Service.Admin.Database.SQLSERVER
         {
             var query = new StringBuilder();
 
-            query.AppendLine("select lc.controller_ID,c.controller_Name,lc.barrie_Index,lc.input_Index,lc.reader_Index from tbl_Lane_Controller lc ");
+            query.AppendLine("select lc.id,lc.controller_ID,lc.lane_ID,c.controller_Name,lc.barrie_Index,lc.input_Index,lc.reader_Index from tbl_Lane_Controller lc ");
 
             query.AppendLine("left join tbl_Controller c on lc.controller_ID = c.id");
 
@@ -171,6 +171,37 @@ namespace Kztek_Service.Admin.Database.SQLSERVER
             }
 
             var list = DatabaseHelper.ExcuteCommandToList<tbl_Lane_Controller_Custom>(query.ToString());
+
+            return await Task.FromResult(list);
+        }
+
+        public async Task<List<tbl_Lane_Led_Custom>> GetLaneLeds(IEnumerable<string> laneids)
+        {
+            var query = new StringBuilder();
+
+            query.AppendLine("select lc.id,lc.LED_ID,lc.lane_ID,c.Name as LED_Name from tbl_Lane_Led lc ");
+
+            query.AppendLine("left join tbl_LED c on lc.LED_ID = c.id");
+
+            if (laneids != null && laneids.Count() > 0)
+            {
+                var count = 0;
+
+                query.AppendLine("where lc.lane_ID IN ( ");
+
+                foreach (var item in laneids)
+                {
+                    count++;
+
+                    query.AppendLine(string.Format("'{0}'{1}", item, count == laneids.Count() ? "" : ","));
+                }
+
+                query.AppendLine(" ) ");
+
+
+            }
+
+            var list = DatabaseHelper.ExcuteCommandToList<tbl_Lane_Led_Custom>(query.ToString());
 
             return await Task.FromResult(list);
         }

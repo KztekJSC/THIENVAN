@@ -1,0 +1,36 @@
+﻿@model Kztek_Library.Models.SelectListModel_Chosen
+
+<div id="ModalAddController" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Thêm BĐK
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form id="@string.Format("frmAddController")" class="form-horizontal">
+                    @Html.Hidden("hidLaneId", (string)ViewBag.LaneId)
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Tên BĐK<span class="error">*</span> </label>
+                                <div class="col-sm-9 col-xs-12">
+                                    @await Component.InvokeAsync("ChosenSelect", Model)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm px-4 btn-outline-primary mb-1" id="btnClose" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-sm px-4 btn-primary mb-1" id="btnCompleted">Hoàn thành</button>
+            </div>
+        </div>
+
+    </div>
+</div>

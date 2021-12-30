@@ -22,5 +22,6 @@ namespace Kztek_Service.Admin.Database
         Task<MessageReport> DeleteById(string id);
 
         Task<tbl_Lane_PC> getByPc_ID(string pc_ID);
+        Task<tbl_Lane_PC> GetByPCLane(string pcId, string laneId);
     }
 }

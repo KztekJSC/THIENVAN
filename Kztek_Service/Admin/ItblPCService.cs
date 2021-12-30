@@ -29,5 +29,6 @@ namespace Kztek_Service.Admin
         Task<tblPC> GetByName_Id(string name, string id);
         Task<List<tbl_Lane_PC_Custom>> GetLanePCs(string pcid);
         Task<List<tbl_Lane_Controller_Custom>> GetLaneControllers(IEnumerable<string> laneids);
+        Task<List<tbl_Lane_Led_Custom>> GetLaneLeds(IEnumerable<string> laneids);
     }
 }

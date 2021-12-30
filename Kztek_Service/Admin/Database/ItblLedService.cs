@@ -25,5 +25,6 @@ namespace Kztek_Service.Admin.Database
         Task<MessageReport> Update(tblLED oldObj);
 
         Task<MessageReport> DeleteById(string id);
+        Task<List<tblLED>> GetAll();
     }
 }

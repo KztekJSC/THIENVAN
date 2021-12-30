@@ -16,17 +16,23 @@ namespace Kztek_Model.Models
 
         public string controller_Name { get; set; }
 
+        public int comm_Type { get; set; }
+
+        public string com_Port { get; set; }
+
+        public string baud_Rate { get; set; }
+
         public string controller_Code { get; set; }
 
         public int controller_Address { get; set; }
 
         public int controller_Type { get; set; }
 
-        public int comm_Type { get; set; }
+        public int Readers_Number { get; set; }
 
-        public string com_Port { get; set; }
+        public int Inputs_Number { get; set; }
 
-        public string baud_Rate { get; set; }
+        public int Relays_Number { get; set; }
 
         public string description { get; set; }
 

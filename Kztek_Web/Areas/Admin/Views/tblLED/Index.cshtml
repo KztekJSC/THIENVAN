@@ -90,35 +90,20 @@
                     {
                         <tr class="">
                             <td class="text-left">
-                                @item.led_Code
+                                @item.Code
                             </td>
                             <td class="text-left">
-                                @item.led_Name
+                                @item.Name
                             </td>
-                            <td class="center">
-                                
-                                @if (item.led_Function == 0)
-                                {
-                                    <span class="label label-sm label-info">Dùng cho cổng</span>
-                                }
-                                else if (item.led_Function == 1)
-                                {
-                                    <span class="label label-sm label-success">Dùng cho phòng giao dịch</span>
-                                }
-                                else if (item.led_Function == 2)
-                                {
-                                    <span class="label label-sm  label-default">Dùng cho kho</span>
-                                }
-
+                           
+                            <td class="text-left">
+                                @item.Type
                             </td>
                             <td class="text-left">
-                                @item.controller_Type
+                                @item.IP
                             </td>
                             <td class="text-left">
-                                @item.ip_Address
-                            </td>
-                            <td class="text-left">
-                                @item.port
+                                @item.Port
                             </td>
 
                             <td class="center">
@@ -128,7 +113,7 @@
             ControllerName = "tblLED",
             ActionName = "Update",
             RecordId = "",
-            model = new { id = item.id.ToString() },
+            model = new { id = item.ID },
             Auth_Value = authModel
         })
 
@@ -136,7 +121,7 @@
                                     {
           ControllerName = "tblLED",
           ActionName = "Delete",
-          RecordId = item.id.ToString(),
+          RecordId = item.ID,
           model = null,
           Auth_Value = authModel
         })
