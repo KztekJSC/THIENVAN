@@ -31,39 +31,80 @@
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             @Html.Hidden("ControllerID", Model.Model != null ? Model.Model.id : "")
             @Html.Hidden("SaveAndCountinue", false)
+
             <div class="form-group">
-                <label class="col-sm-4 control-label no-padding-right"> Mã bộ điều khiển</label>
-                <div class="col-sm-4 col-xs-12">
-                    @Html.TextBox("controller_Code", Model.Model.controller_Code, new { @class = "form-control", @placeholder = "Mã BĐK" })
-                    @Html.ValidationMessage("controller_Code", "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label no-padding-right"> Tên <span style="color:red">(*)</span></label>
+                <label class="col-sm-4 control-label no-padding-right"> Tên BĐK<span style="color:red">(*)</span></label>
                 <div class="col-sm-4 col-xs-12">
                     @Html.TextBox("controller_Name", Model.Model.controller_Name, new { @class = "form-control", @placeholder = "Tên BĐK" })
                     @Html.ValidationMessage("controller_Name", "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label no-padding-right">Địa chỉ</label>
+                <label class="col-sm-4 control-label no-padding-right">Giao thức </label>
                 <div class="col-sm-4 col-xs-12">
-                    @Html.TextBox("controller_Address", Model.Model.controller_Address, new { @class = "form-control", @placeholder = "Địa chỉ" })
-                    @Html.ValidationMessage("controller_Address", "", new { @class = "text-danger" })
+                    @Html.DropDownList("comm_Type", new SelectList(Model.Commu_1, "ItemValue", "ItemText", Model.Model.comm_Type), new { @class = "form-control" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right" id="comport"> Cổng COM</label>
+                <div class="col-sm-4 col-xs-12">
+                    @Html.TextBox("com_Port", Model.Model.com_Port, new { @class = "form-control", @placeholder = "Cổng COM" })
+
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label no-padding-right">Miêu tả</label>
+                <label class="col-sm-4 control-label no-padding-right" id="daudrate"> Baudrate</label>
                 <div class="col-sm-4 col-xs-12">
-                    @Html.TextBox("description", Model.Model.description, new { @class = "form-control", @placeholder = "Miêu tả" })
-                    @Html.ValidationMessage("description", "", new { @class = "text-danger" })
+                    @Html.TextBox("baud_Rate", Model.Model.baud_Rate, new { @class = "form-control", @placeholder = "Baudrate" })
+
                 </div>
             </div>
-          
-          
-         
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Loại BĐK </label>
+                <div class="col-sm-4 col-xs-12">
+                    @await Component.InvokeAsync("ChosenSelect", Model.Data_Select_2)
+                </div>
+            </div>
 
-         
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Address(RS232/485/422)</label>
+                <div class="col-sm-4 col-xs-12">
+                    @Html.TextBox("controller_Address", Model.Model.controller_Address, new { @class = "form-control", @placeholder = "Địa chỉ" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Số lượng đầu đọc</label>
+                <div class="col-sm-4 col-xs-12">
+                    @Html.TextBox("Readers_Number", Model.Model.Readers_Number, new { @class = "form-control", @type = "number", @min = "0" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Số lượng Barrier</label>
+                <div class="col-sm-4 col-xs-12">
+                    @Html.TextBox("Inputs_Number", Model.Model.Inputs_Number, new { @class = "form-control", @type = "number", @min = "0" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Số lượng nút bấm và loop</label>
+                <div class="col-sm-4 col-xs-12">
+                    @Html.TextBox("Relays_Number", Model.Model.Relays_Number, new { @class = "form-control", @type = "number", @min = "0" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Dừng sử dụng</label>
+                <div class="col-sm-4">
+                    <label class="block">
+                        @Html.CheckBox("Inactive", Model.Model.Inactive, new { @class = "ace input-lg" })
+                        <span class="lbl"> </span>
+                    </label>
+                </div>
+            </div>
 
             @await Html.PartialAsync("~/Views/Shared/Partials/ButtonPartial.cshtml", new Kztek_Library.Models.AuthPartialModel()
             {

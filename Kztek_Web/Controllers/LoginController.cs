@@ -32,13 +32,15 @@ namespace Kztek_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            updateDatabase();
+
             var data = await _UserService.GetAll();
 
             var model = new AuthModel();
             model.isAny = data.Any();
             model.Data_Service = Data_Service();
             model.AreaCode = "Admin";
-            updateDatabase();
+           
             //kiểm tra session xem có lưu ngôn ngữ không nếu có thì lấy không mặc định là "vi"
             string sessionValue = HttpContext.Session.GetString(SessionConfig.Kz_Language);
             if (string.IsNullOrWhiteSpace(sessionValue))

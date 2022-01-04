@@ -1,5 +1,6 @@
 ﻿using Kztek_Library.Configs;
 using Kztek_Library.Helpers;
+using Kztek_Library.Models;
 using Kztek_Model.Models;
 using Kztek_Service.Admin;
 using Kztek_Web.Attributes;
@@ -20,6 +21,25 @@ namespace Kztek_Web.Areas.Admin.Controllers
         {
             this._tbl_ControllerService = _tbl_ControllerService;
         }
+
+        #region DDL
+        public async Task<SelectListModel_Chosen> GetControllerType_Chosen(string selecteds)  //bind ServicePackageId to dropdownlist
+        {
+
+            var model = new SelectListModel_Chosen
+            {
+                Data = await StaticList.LineTypes1(),
+                Placeholder = await LanguageHelper.GetLanguageText("STATICLIST:DEFAULT"),
+                IdSelectList = "controller_Type",
+                isMultiSelect = false,
+                Selecteds = selecteds
+            };
+
+            return model;
+        }
+
+        #endregion
+
         #region Danh sách
         [CheckSessionCookie(AreaConfig.Admin)]
         public async Task<IActionResult> Index(string key, string pc, int page = 1, string group = "", string selectedId = "")
@@ -39,6 +59,7 @@ namespace Kztek_Web.Areas.Admin.Controllers
 
 
         #endregion
+
         #region Thêm mới
 
         /// <summary>
@@ -53,7 +74,14 @@ namespace Kztek_Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create(tbl_Controller model, string c)
         {
-            model = model == null ? new tbl_Controller() : model;         
+            model = model == null ? new tbl_Controller() : model;
+
+            ViewBag.CommunicationType = StaticList.Communication1();
+
+            ViewBag.Read = StaticList.ReaderTypes1();
+
+            ViewBag.LineType = await GetControllerType_Chosen(model.controller_Type.ToString());
+
             return await Task.FromResult(View(model));
         }
         /// <summary>
@@ -70,7 +98,11 @@ namespace Kztek_Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(tbl_Controller model, bool SaveAndCountinue = false)
         {
-            
+            ViewBag.CommunicationType = StaticList.Communication1();
+
+            ViewBag.Read = StaticList.ReaderTypes1();
+
+            ViewBag.LineType = await GetControllerType_Chosen(model.controller_Type.ToString());
 
             if (!ModelState.IsValid)
             {
@@ -110,14 +142,8 @@ namespace Kztek_Web.Areas.Admin.Controllers
                 return View(model);
             }
         }
-
-
-
-
-
-
-
         #endregion
+
         #region Cập nhật
 
         /// <summary>
@@ -135,7 +161,13 @@ namespace Kztek_Web.Areas.Admin.Controllers
         public async Task<IActionResult> Update(string id, int pageNumber = 1)
         {
             var model = await _tbl_ControllerService.GetById(id);
-        
+
+            ViewBag.CommunicationType = StaticList.Communication1();
+
+            ViewBag.Read = StaticList.ReaderTypes1();
+
+            ViewBag.LineType = await GetControllerType_Chosen(model.controller_Type.ToString());
+
             return View(model);
         }
 
@@ -154,7 +186,12 @@ namespace Kztek_Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(tbl_Controller model, int pageNumber = 1)
         {
-           
+            ViewBag.CommunicationType = StaticList.Communication1();
+
+            ViewBag.Read = StaticList.ReaderTypes1();
+
+            ViewBag.LineType = await GetControllerType_Chosen(model.controller_Type.ToString());
+
             var oldObj = await _tbl_ControllerService.GetById(model.id.ToString());
             if (oldObj == null)
             {
@@ -184,13 +221,19 @@ namespace Kztek_Web.Areas.Admin.Controllers
 
             //Gán giá trị
 
-            oldObj.id = (model.id);
+            oldObj.id = model.id;
             oldObj.controller_Name = model.controller_Name;
             oldObj.controller_Code = model.controller_Code;
             oldObj.controller_Address = model.controller_Address;
             oldObj.com_Port = model.com_Port;
             oldObj.description = model.description;
-           
+            oldObj.Relays_Number = model.Relays_Number;
+            oldObj.Readers_Number = model.Readers_Number;
+            oldObj.Inputs_Number = model.Inputs_Number;
+            oldObj.baud_Rate = model.baud_Rate;
+            oldObj.comm_Type = model.comm_Type;
+            oldObj.controller_Type = model.controller_Type;
+            oldObj.Inactive = model.Inactive;
 
             //Thực hiện cập nhật
             var result = await _tbl_ControllerService.Update(oldObj);

@@ -5,9 +5,9 @@
     Model = Model,
     Controller = "tblController",
     Action = "Update",
-    Page = 1
-
-
+    Page = 1,
+    Commu_1 = (List<Kztek_Library.Models.SelectListModel_Communication>)ViewBag.CommunicationType,
+    Data_Select_2 = (Kztek_Library.Models.SelectListModel_Chosen)ViewBag.LineType
 });
 @section scripts{
     <script src="~/modules/Parking/tblLaneController.js"></script>

@@ -35,7 +35,7 @@ namespace Kztek_Model.Models
         public int Relays_Number { get; set; }
 
         public string description { get; set; }
+        public bool Inactive { get; set; }
 
-      
     }
 }
