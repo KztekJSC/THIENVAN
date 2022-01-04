@@ -29,7 +29,7 @@
         @using (Html.BeginForm(action, controller, FormMethod.Post, new { encType = "multipart/form-data", @class = "form-horizontal", @role = "form" }))
         {
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-            @Html.Hidden("ControllerID", Model.Model.id.ToString())
+            @Html.Hidden("ControllerID", Model.Model != null ? Model.Model.id : "")
             @Html.Hidden("SaveAndCountinue", false)
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right"> Mã bộ điều khiển</label>

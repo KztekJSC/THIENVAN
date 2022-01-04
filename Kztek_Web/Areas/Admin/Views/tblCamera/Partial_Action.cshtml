@@ -29,7 +29,7 @@
         @using (Html.BeginForm(action, controller, FormMethod.Post, new { encType = "multipart/form-data", @class = "form-horizontal", @role = "form" }))
         {
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-            @Html.Hidden("CameraID", Model.Model.id.ToString())
+            @Html.Hidden("CameraID", Model.Model != null ? Model.Model.id : "")
             @Html.Hidden("SaveAndCountinue", false)
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right"> IP <span style="color:red">(*)</span></label>
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label no-padding-right"> @await Component.InvokeAsync("Language", new { path = "BODY:TABLE:CameraName" })<span class="error">*</span> </label>
+                <label class="col-sm-4 control-label no-padding-right"> @await Component.InvokeAsync("Language", new { path = "BODY:TABLE:CameraName" })<span class="error">(*)</span> </label>
                 <div class="col-sm-4 col-xs-12">
                     @Html.TextBox("camera_Name", Model.Model.camera_Name, new { @class = "form-control", @placeholder = await LanguageHelper.GetLanguageText("BODY:TABLE:CameraName") })
                     @Html.ValidationMessage("camera_Name", "", new { @class = "text-danger" })
