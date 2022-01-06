@@ -393,7 +393,7 @@ namespace Kztek_Web.Areas.Admin.Controllers
 
             objLaneCon.barrie_Index = !string.IsNullOrEmpty(model.barrie_Index) ? model.barrie_Index : "";
 
-            objLaneCon.input_Index = !string.IsNullOrEmpty(model.barrie_Index) ? model.input_Index : "";
+            objLaneCon.input_Index = !string.IsNullOrEmpty(model.input_Index) ? model.input_Index : "";
 
             result = await _tbl_Lane_ControllerService.Update(objLaneCon);
 

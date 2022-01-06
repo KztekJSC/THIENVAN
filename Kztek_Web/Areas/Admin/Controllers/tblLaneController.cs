@@ -42,6 +42,20 @@ namespace Kztek_Web.Areas.Admin.Controllers
 
             return model;
         }
+        public async Task<SelectListModel_Chosen> GetDirection_Chosen(string selecteds)  //bind ServicePackageId to dropdownlist
+        {
+
+            var model = new SelectListModel_Chosen
+            {
+                Data = StaticList.Direction(),
+                Placeholder = await LanguageHelper.GetLanguageText("STATICLIST:DEFAULT"),
+                IdSelectList = "direction",
+                isMultiSelect = false,
+                Selecteds = selecteds
+            };
+
+            return model;
+        }
 
         public async Task<SelectListModel_Chosen> GetListPC_Chosen(string selecteds, string id = "PCID")  //bind ServicePackageId to dropdownlist
         {
@@ -118,6 +132,8 @@ namespace Kztek_Web.Areas.Admin.Controllers
             ViewBag.camera_LPR_2 = await GetCameraLPR_2_Chosen(model.camera_LPR_2_id);
             ViewBag.camera_Panorama_1 = await GetCameraPanorama1_Chosen(model.camera_Panorama_1_id);
             ViewBag.camera_Panorama_2 = await GetCameraPanorama2_Chosen(model.camera_Panorama_2_id);
+            ViewBag.Direction = await GetDirection_Chosen(model != null ? model.direction.ToString() : "0");
+
             return await Task.FromResult(View(model));
         }
         /// <summary>
@@ -138,6 +154,8 @@ namespace Kztek_Web.Areas.Admin.Controllers
             ViewBag.camera_LPR_2 = await GetCameraLPR_2_Chosen(model.camera_LPR_2_id);
             ViewBag.camera_Panorama_1 = await GetCameraPanorama1_Chosen(model.camera_Panorama_1_id);
             ViewBag.camera_Panorama_2 = await GetCameraPanorama2_Chosen(model.camera_Panorama_2_id);
+
+            ViewBag.Direction = await GetDirection_Chosen(model != null ? model.direction.ToString() : "0");
 
             if (!ModelState.IsValid)
             {
@@ -307,6 +325,7 @@ namespace Kztek_Web.Areas.Admin.Controllers
             ViewBag.camera_LPR_2 = await GetCameraLPR_2_Chosen(model.camera_LPR_2_id);
             ViewBag.camera_Panorama_1 = await GetCameraPanorama1_Chosen(model.camera_Panorama_1_id);
             ViewBag.camera_Panorama_2 = await GetCameraPanorama2_Chosen(model.camera_Panorama_2_id);
+            ViewBag.Direction = await GetDirection_Chosen(model.direction.ToString());
             return View(model);
         }
 
@@ -329,6 +348,8 @@ namespace Kztek_Web.Areas.Admin.Controllers
             ViewBag.camera_LPR_2 = await GetCameraLPR_2_Chosen(model.camera_LPR_2_id);
             ViewBag.camera_Panorama_1 = await GetCameraPanorama1_Chosen(model.camera_Panorama_1_id);
             ViewBag.camera_Panorama_2 = await GetCameraPanorama2_Chosen(model.camera_Panorama_2_id);
+            ViewBag.Direction = await GetDirection_Chosen(model.direction.ToString());
+
             var oldObj = await _tblLaneService.GetById(model.id);
             if (oldObj == null)
             {
@@ -370,7 +391,7 @@ namespace Kztek_Web.Areas.Admin.Controllers
             oldObj.camera_Panorama_2 = model.camera_Panorama_2_id;
             oldObj.card_Types = model.card_Types;
             oldObj.auto_Mode = model.auto_Mode;
-
+            oldObj.direction = model.direction;
             //Thực hiện cập nhật
             var result = await _tblLaneService.Update(oldObj);
 

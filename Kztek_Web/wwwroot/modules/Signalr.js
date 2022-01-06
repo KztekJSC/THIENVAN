@@ -60,7 +60,10 @@ $(() => {
         
     })
 
-    SignalrController.PartialTopService();
+    connection.on("LED", function (obj) {
+
+        toastr.success("hello");
+    })
 })
 
 var SignalrController = {
@@ -74,5 +77,17 @@ var SignalrController = {
                 $('#boxService ').html('');
                 $('#boxService ').html(data);
             });
+    },
+    GetId: function () {
+        $.ajax({
+            url: '/Admin/Home/GetId',
+            method: 'GET',
+            success: (result) => {
+                
+            },
+            error: (error) => {
+                console.log(error)
+            }
+        })
     },
 }

@@ -187,7 +187,8 @@ namespace Kztek_Service.Admin.Database.SQLSERVER
                 camera_Panorama_1_id = model.camera_Panorama_1,
                 camera_Panorama_2_id = model.camera_Panorama_2,
                 card_Types = model.card_Types,
-                auto_Mode = model.auto_Mode
+                auto_Mode = model.auto_Mode,
+                direction = model.direction
 
             };
             return obj;

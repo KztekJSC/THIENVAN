@@ -582,5 +582,14 @@ namespace Kztek_Library.Helpers
                                     };
             return list;
         }
+        public static List<SelectListModel> Direction()
+        {
+
+            var list = new List<SelectListModel> {
+                                         new SelectListModel { ItemValue = "0", ItemText = "Vào"},
+                                         new SelectListModel { ItemValue = "1", ItemText = "Ra"},
+                                    };
+            return list;
+        }
     }
 }

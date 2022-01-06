@@ -274,33 +274,44 @@ namespace Kztek_Library.Helpers
 
         public static async Task SqlTableDependency()
         {
-            var obj = new tbl_Event();
-
-            var connectionString = AppSettingHelper.GetStringFromFileJson("connectstring", "ConnectionStrings:DefaultConnection").Result;
-
-            var mapper = new ModelToTableMapper<tbl_Event>();
-            mapper.AddMapping(c => c.event_Code, "event_Code");
-            mapper.AddMapping(c => c.event_DateTime_Service, "event_DateTime_Service");
-
-            using (var dep = new SqlTableDependency<tbl_Event>(connectionString, "tbl_Event", mapper: mapper))
+            try
             {
-                dep.OnChanged += async (sender, e) =>
+                var obj = new tblLED();
+
+                var connectionString = AppSettingHelper.GetStringFromFileJson("connectstring", "ConnectionStrings:DefaultConnection").Result;
+
+                var mapper = new ModelToTableMapper<tblLED>();
+                mapper.AddMapping(c => c.ID, "ID");
+                mapper.AddMapping(c => c.Name, "Name");
+
+                using (var dep = new SqlTableDependency<tblLED>(connectionString, "tbl_LED", mapper: mapper))
                 {
-                    var changedEntity = e.Entity;
-
-                    if (e.ChangeType == TableDependency.SqlClient.Base.Enums.ChangeType.Update && (changedEntity.event_Code == 1 || changedEntity.event_Code == 2))
+                    dep.OnChanged += async (sender, e) =>
                     {
-                        string type = changedEntity.event_Code == 1 ? "service" : "wareHouse";
+                        await LogHelper.WriteLog("SUCCESS", "SqlTableDependency", "", "tbl_LED");
 
-                        await SignalrHelper.SqlHub.Clients.All.SendAsync("tbl_Event", type, changedEntity);
-                    }
-                }; 
+                        var changedEntity = e.Entity;
 
-                dep.Start();
-                Console.ReadKey();
-                dep.Stop();
+                        if (e.ChangeType == TableDependency.SqlClient.Base.Enums.ChangeType.Update)
+                        {
+                            // string type = changedEntity.event_Code == 1 ? "service" : "wareHouse";
+
+                            await SignalrHelper.SqlHub.Clients.All.SendAsync("LED");
+                        }
+                    };
+
+                    dep.Start();
+                    Console.ReadKey();
+                    dep.Stop();
+                }
+
             }
-
+            catch (Exception e)
+            {
+                await LogHelper.WriteLog("ERROR", "SqlTableDependency", e.Message, "tbl_LED");
+                throw;
+            }
+           
            
         }   
     }

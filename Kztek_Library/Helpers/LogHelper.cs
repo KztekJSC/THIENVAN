@@ -96,5 +96,41 @@ namespace Kztek_Library.Helpers
             DatabaseHelper.ExcuteCommandToBool(str.ToString());
         }
 
+        public static async Task WriteLog(string objId, string actions, string description, string classname)
+        {
+            var area =  "";
+
+            var t = new tblLog();
+            t.LogID = Guid.NewGuid().ToString();
+            t.Actions = actions;
+            t.AppCode = area;
+            t.ComputerName = "";
+            t.Date = DateTime.Now;
+            t.Description = description;
+            t.IPAddress = "";
+            t.ObjectName = objId;
+            t.SubSystemCode = classname;
+            t.UserName = "";
+
+            var str = new StringBuilder();
+
+            str.Append("INSERT INTO tblLog (LogID, Date, UserName, AppCode, SubSystemCode, ObjectName, Actions, Description, ComputerName)");
+
+            str.AppendLine("VALUES (");
+
+            str.AppendLine(string.Format("'{0}'", Guid.NewGuid()));
+            str.AppendLine(string.Format(", '{0}'", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")));
+            str.AppendLine(string.Format(", '{0}'", t.UserName));
+            str.AppendLine(string.Format(", '{0}'", t.AppCode));
+            str.AppendLine(string.Format(", '{0}'", t.SubSystemCode));
+            str.AppendLine(string.Format(", N'{0}'", t.ObjectName));
+            str.AppendLine(string.Format(", N'{0}'", t.Actions));
+            str.AppendLine(string.Format(", N'{0}'", t.Description));
+            str.AppendLine(string.Format(", '{0}'", t.ComputerName));
+
+            str.AppendLine(")");
+
+            DatabaseHelper.ExcuteCommandToBool(str.ToString());
+        }
     }
 }
