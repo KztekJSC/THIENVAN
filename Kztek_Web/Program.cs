@@ -34,7 +34,7 @@ namespace Kztek_Web
 
             if (sync == "1") //on
             {
-                //new Thread(() => SqlHelper.SqlTableDependency()).Start();
+                new Thread(() => SqlHelper.SqlTableDependency()).Start();
               
             }
 
